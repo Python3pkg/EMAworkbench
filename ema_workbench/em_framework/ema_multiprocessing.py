@@ -139,7 +139,7 @@ def setup_working_directories(models, root_dir):
         
         ema_logging.debug("setting up working directory: {}".format(tmpdir))
         
-        for key, value in wd_by_model.items():
+        for key, value in list(wd_by_model.items()):
             # we need a sub directory in the process working directory
             # for each unique model working directory
             subdir = os.path.basename(os.path.normpath(key))

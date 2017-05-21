@@ -13,7 +13,7 @@ newResults = {}
 #get time and remove it from the dict
 time = results.pop('TIME')
 
-for key, value in results.items():
+for key, value in list(results.items()):
     if key == 'deceased population region 1':
         newResults[key] = value[:,-1] #we want the end value
     else:

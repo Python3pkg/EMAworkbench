@@ -12,6 +12,7 @@ import pandas
 
 from .util import Variable
 from ema_workbench.util.ema_exceptions import EMAError
+import collections
 
 
 # Created on 24 mei 2011
@@ -30,7 +31,7 @@ def Outcome(name, time=False):
         return TimeSeriesOutcome(name)
     
 
-class AbstractOutcome(Variable):
+class AbstractOutcome(Variable, metaclass=abc.ABCMeta):
     '''
     Base Outcome class
     
@@ -54,7 +55,6 @@ class AbstractOutcome(Variable):
     kind : int
     
     '''
-    __metaclass__ = abc.ABCMeta
 
     MINIMIZE = -1
     MAXIMIZE = 1
@@ -63,7 +63,7 @@ class AbstractOutcome(Variable):
     def __init__(self, name, kind=INFO, variable_name=None, function=None):
         super(AbstractOutcome, self).__init__(name)
         
-        if function is not None and not callable(function):
+        if function is not None and not isinstance(function, collections.Callable):
             raise ValueError('function must be a callable')
         if variable_name:
             if (not isinstance(variable_name, six.string_types)) and (not all(isinstance(elem, six.string_types) for elem in variable_name)):
@@ -101,7 +101,7 @@ class AbstractOutcome(Variable):
     def __eq__ (self, other):
         comparison = [all(hasattr(self, key) == hasattr(other, key) and
                           getattr(self, key) == getattr(other, key) for key 
-                          in self.__dict__.keys())]
+                          in list(self.__dict__.keys()))]
         comparison.append(self.__class__ == other.__class__)
         return all(comparison)
     
@@ -177,7 +177,7 @@ class TimeSeriesOutcome(AbstractOutcome):
         super(TimeSeriesOutcome, self).__init__(name, kind, variable_name=variable_name, 
                                                 function=function)
         
-        if (not self.kind==AbstractOutcome.INFO) and (not callable(function)):
+        if (not self.kind==AbstractOutcome.INFO) and (not isinstance(function, collections.Callable)):
             raise ValueError(('function needs to be specified when using'
                               ' TimeSeriesOutcome in optimization' ))
 

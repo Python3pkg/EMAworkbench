@@ -100,8 +100,8 @@ class TestModel(unittest.TestCase):
         scenario = Scenario(**{'a':0.1})
         model.run_model(scenario, Policy('test'))
         
-        self.assertIn('a', scenario.keys())
-        self.assertIn('b', scenario.keys())
+        self.assertIn('a', list(scenario.keys()))
+        self.assertIn('b', list(scenario.keys()))
         
         model = Model(model_name, function)
         cats = [Category('some name', [1,2]),
@@ -112,16 +112,16 @@ class TestModel(unittest.TestCase):
         scenario = Scenario(**{'a':cats[0].value})
         model.run_model(scenario, Policy('test'))
         
-        self.assertIn('a', scenario.keys())
-        self.assertIn('b', scenario.keys())
+        self.assertIn('a', list(scenario.keys()))
+        self.assertIn('b', list(scenario.keys()))
         self.assertEqual(scenario['a'], 1)
         self.assertEqual(scenario['b'], 2)
         
         scenario = Scenario(**{'a':cats[1].value})
         model.run_model(scenario, Policy('test'))
         
-        self.assertIn('a', scenario.keys())
-        self.assertIn('b', scenario.keys())
+        self.assertIn('a', list(scenario.keys()))
+        self.assertIn('b', list(scenario.keys()))
         self.assertEqual(scenario['a'], 3)
         self.assertEqual(scenario['b'], 4)
         
@@ -136,11 +136,11 @@ class TestModel(unittest.TestCase):
         model_name = 'modelname'
         
         model = Model(model_name, lambda x:x)
-        self.assertTrue(len(model.uncertainties.keys())==0)
+        self.assertTrue(len(list(model.uncertainties.keys()))==0)
         
         unc_a = RealParameter('a', 0, 1)
         model.uncertainties = unc_a
-        self.assertTrue(len(model.uncertainties.keys())==1)
+        self.assertTrue(len(list(model.uncertainties.keys()))==1)
         self.assertTrue(unc_a.name in model.uncertainties)
 
 if __name__ == "__main__":

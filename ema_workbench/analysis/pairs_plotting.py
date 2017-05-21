@@ -231,7 +231,7 @@ def pairs_density(results,
         
         axes_dicts = {}
         figures = []
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             figure, axes_dict = simple_pairs_density(value, outcomes_to_show, 
                                        log, colormap, gridsize, ylabels,
                                        extents=extents, title=key)
@@ -243,9 +243,9 @@ def pairs_density(results,
                            for field2 in outcomes_to_show]
         for combi in combis:
             vmax = -1
-            for entry in axes_dicts.values():
+            for entry in list(axes_dicts.values()):
                 vmax =  max(entry[combi].collections[0].norm.vmax, vmax)
-            for entry in axes_dicts.values():
+            for entry in list(axes_dicts.values()):
                 ax = entry[combi]
                 ax.collections[0].set_clim(vmin=0, vmax=vmax)
             del vmax
@@ -274,7 +274,7 @@ def determine_extents(outcomes, outcomes_to_show):
     '''
     
     limits = {}
-    for pol_out in outcomes.values():
+    for pol_out in list(outcomes.values()):
         for entry in outcomes_to_show:
             out = pol_out[entry]
             minimum = np.amin(out)

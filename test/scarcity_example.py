@@ -4,7 +4,7 @@ Created on 8 mrt. 2011
 .. codeauthor:: jhkwakkel <j.h.kwakkel (at) tudelft (dot) nl>
                 epruyt <e.pruyt (at) tudelft (dot) nl>
 '''
-from __future__ import division
+
 
 from math import exp
 import numpy as np
@@ -118,13 +118,13 @@ def determineBehavior(value):
   
     #vanaf hier test
     firstOrder = [value[i+1] - value[i]
-                  for i in xrange(value.shape[0]-1)
+                  for i in range(value.shape[0]-1)
                   ]
     firstOrder = np.asarray(firstOrder)
     a = np.absolute(firstOrder)
     #a = firstOrder
     secondOrder = [(firstOrder[i], a[i+1] - a[i])
-                  for i in xrange(a.shape[0]-1)
+                  for i in range(a.shape[0]-1)
                   ]
     
     atomicBehavior = []

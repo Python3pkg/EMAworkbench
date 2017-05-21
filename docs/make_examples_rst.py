@@ -40,7 +40,7 @@ def main(exampledir,sourcedir):
             relpath = os.path.split(root)[-1]
             datad.setdefault(relpath, []).append((fullpath, fname, contents))
 
-    subdirs = datad.keys()
+    subdirs = list(datad.keys())
     subdirs.sort()
     output_dir=r'./gallery/rst'
     if not os.path.exists(output_dir):
@@ -120,7 +120,7 @@ EMA workbench Examples
                 not out_of_date(fullpath, outfile)):
                 continue
 
-            print '%s/%s'%(subdir,fname)
+            print('%s/%s'%(subdir,fname))
 
             fhstatic = file(static_file, 'w')
             fhstatic.write(contents)

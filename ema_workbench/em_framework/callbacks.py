@@ -32,7 +32,7 @@ from .parameters import CategoricalParameter, IntegerParameter
 __all__ = ['AbstractCallback',
            'DefaultCallback']
 
-class AbstractCallback(object):
+class AbstractCallback(object, metaclass=abc.ABCMeta):
     '''
     Abstract base class from which different call back classes can be derived.
     Callback is responsible for storing the results of the runs.
@@ -58,7 +58,6 @@ class AbstractCallback(object):
                          the frequency at which to log progress
 
     '''
-    __metaclass__ = abc.ABCMeta
     
     i = 0
     reporting_interval = 100

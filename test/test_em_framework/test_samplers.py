@@ -91,12 +91,12 @@ class SamplerTestCase(unittest.TestCase):
         parameters = determine_parameters(models, 'uncertainties', union=True)
         for model in models:
             for unc in model.uncertainties:
-                self.assertIn(unc.name, parameters.keys())
+                self.assertIn(unc.name, list(parameters.keys()))
         
         parameters = determine_parameters(models, 'uncertainties', union=False)
-        self.assertIn('b', parameters.keys())
-        self.assertNotIn('c', parameters.keys())
-        self.assertNotIn('a', parameters.keys())    
+        self.assertIn('b', list(parameters.keys()))
+        self.assertNotIn('c', list(parameters.keys()))
+        self.assertNotIn('a', list(parameters.keys()))    
 
 
 if __name__ == "__main__":

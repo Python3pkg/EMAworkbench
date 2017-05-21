@@ -17,10 +17,10 @@ def stdDev(ds):
     return np.std(ds)
 
 def linearFit(ds):
-    return nthDegreeFit(range(len(ds)),ds,1)
+    return nthDegreeFit(list(range(len(ds))),ds,1)
 
 def quadraticFit(ds):
-    return nthDegreeFit(range(len(ds)),ds,2)
+    return nthDegreeFit(list(range(len(ds))),ds,2)
 
 def nthDegreeFit(x,ds,degree):
     return np.polyfit(x, ds, degree)

@@ -117,7 +117,7 @@ class BaseNetLogoModel(FileModel):
         """
 #         super(BaseNetLogoModel, self).run_model(scenario, policy)
         
-        for key, value in experiment.items():
+        for key, value in list(experiment.items()):
             try:
                 self.netlogo.command(self.command_format.format(key, value))
             except jpype.JavaException as e:
@@ -210,7 +210,7 @@ class BaseNetLogoModel(FileModel):
         '''helper function for parsing outcomes'''
         
         results = {}
-        for key, value in fns.items():
+        for key, value in list(fns.items()):
             with open(value) as fh:
                 result = fh.readline()
                 result = result.strip()

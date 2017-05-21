@@ -35,7 +35,7 @@ def test_filter_scalar_outcomes():
     for entry in ['d','e','f']:
         outcomes[entry] = np.random.rand(10)
     outcomes = filter_scalar_outcomes(outcomes)
-    print(outcomes.keys())
+    print(list(outcomes.keys()))
 
 def test_group_results():
     results = utilities.load_eng_trans_data()
@@ -47,10 +47,10 @@ def test_group_results():
                            'set3':np.arange(25,experiments.shape[0])}
     groups = group_results(experiments, outcomes, 
                            group_by='index', 
-                           grouping_specifiers=groups.values(),
-                           grouping_labels= groups.keys())
+                           grouping_specifiers=list(groups.values()),
+                           grouping_labels= list(groups.keys()))
     total_data = 0
-    for value in groups.values():
+    for value in list(groups.values()):
         total_data += value[0].shape[0]
     print(experiments.shape[0], total_data)
     
@@ -62,7 +62,7 @@ def test_group_results():
                            grouping_specifiers=grouping_specifiers,
                            grouping_labels = [str(entry) for entry in grouping_specifiers]) 
     total_data = 0
-    for value in groups.values():
+    for value in list(groups.values()):
         total_data += value[0].shape[0]
     print(experiments.shape[0], total_data)   
     
@@ -74,7 +74,7 @@ def test_group_results():
                            grouping_specifiers=grouping_specifiers,
                            grouping_labels = [str(entry) for entry in grouping_specifiers]) 
     total_data = 0
-    for value in groups.values():
+    for value in list(groups.values()):
         total_data += value[0].shape[0]
     print(experiments.shape[0], total_data)   
 
@@ -86,7 +86,7 @@ def test_group_results():
                        grouping_specifiers=grouping_specifiers,
                        grouping_labels = [str(entry) for entry in grouping_specifiers])
     total_data = 0
-    for value in groups.values():
+    for value in list(groups.values()):
         total_data += value[0].shape[0]
     print(experiments.shape[0], total_data)   
 
@@ -201,7 +201,7 @@ def test_lines():
      
     experiments, outcomes = results
     new_outcomes = {}
-    for key, value in outcomes.items():
+    for key, value in list(outcomes.items()):
         new_outcomes[key] = value[0:20, :]
     experiments = experiments[0:20]
     results = experiments, new_outcomes

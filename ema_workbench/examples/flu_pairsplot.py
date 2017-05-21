@@ -25,7 +25,7 @@ tr = {}
 # get time and remove it from the dict
 time = outcomes.pop('TIME')
 
-for key, value in outcomes.items():
+for key, value in list(outcomes.items()):
     if key == 'deceased population region 1':
         tr[key] = value[:,-1] #we want the end value
     else:

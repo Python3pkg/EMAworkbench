@@ -59,7 +59,7 @@ class BasePysdModel(AbstractModel):
                              return_columns=self.outcome_variables)
         
         # EMA wants output formatted properly
-        output ={col: series.as_matrix() for col, series in res.iteritems()}
+        output ={col: series.as_matrix() for col, series in res.items()}
         return output
 
 

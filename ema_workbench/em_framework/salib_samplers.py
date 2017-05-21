@@ -106,10 +106,10 @@ class SALibSampler(object):
         parameters = sorted(parameters, key=operator.attrgetter('name'))
         sampled_parameters = self.generate_samples(parameters, nr_samples)
         
-        nr_designs = next(iter(sampled_parameters.values())).shape[0]
+        nr_designs = next(iter(list(sampled_parameters.values()))).shape[0]
 
         params = sorted(sampled_parameters.keys())
-        designs = zip(*[sampled_parameters[u] for u in params]) 
+        designs = list(zip(*[sampled_parameters[u] for u in params])) 
         designs = DefaultDesigns(designs, parameters, nr_designs)
         
         return designs

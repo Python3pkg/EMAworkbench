@@ -29,7 +29,7 @@ experiments, results = results
 logicalIndex = experiments['policy'] == 'no policy'
 newExperiments = experiments[ logicalIndex ]
 newResults = {}
-for key, value in results.items():
+for key, value in list(results.items()):
     newResults[key] = value[logicalIndex]
 
 results = (newExperiments, newResults)

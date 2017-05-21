@@ -22,6 +22,7 @@ from sklearn.linear_model.randomized_l1 import (RandomizedLogisticRegression,
                                                 RandomizedLasso)
 
 from .scenario_discovery_util import CLASSIFICATION, REGRESSION
+import collections
 
 # Created on Jul 9, 2014
 # 
@@ -106,7 +107,7 @@ def _prepare_outcomes(outcomes, classify):
         except KeyError as e:
             raise e
         categorical = False
-    elif callable(classify):
+    elif isinstance(classify, collections.Callable):
         y = classify(outcomes)
         categorical=True
     else:
@@ -144,7 +145,7 @@ def get_univariate_feature_scores(x,y, score_func=F_CLASSIFICATION):
     pvalues = score_func(x, y)[1]
     pvalues = np.asarray(pvalues)
 
-    pvalues = zip(uncs, pvalues)
+    pvalues = list(zip(uncs, pvalues))
     pvalues = list(pvalues)
     pvalues.sort(key=itemgetter(1))
     
@@ -217,7 +218,7 @@ def get_rf_feature_scores(x, y, mode=CLASSIFICATION, nr_trees=250,
 
     importances = forest.feature_importances_
 
-    importances = zip(uncs, importances)
+    importances = list(zip(uncs, importances))
     importances = list(importances)
     importances.sort(key=itemgetter(1), reverse=True)
 
@@ -289,7 +290,7 @@ def get_lasso_feature_scores(x, y, mode=CLASSIFICATION, scaling=0.5,
         raise ValueError('{} invalid value for mode'.format(mode))
 
     importances = lfs.scores_
-    importances = zip(uncs, importances)
+    importances = list(zip(uncs, importances))
     importances = list(importances)
     importances.sort(key=itemgetter(1), reverse=True)
     importances = pd.DataFrame(importances)
@@ -368,7 +369,7 @@ def get_ex_feature_scores(x, y, mode=CLASSIFICATION, nr_trees=250,
 
     importances = extra_trees.feature_importances_
 
-    importances = zip(uncs, importances)
+    importances = list(zip(uncs, importances))
     importances = list(importances)
     importances.sort(key=itemgetter(1), reverse=True)
 
@@ -404,7 +405,7 @@ def get_feature_scores_all(x, y, alg='extra trees', mode=REGRESSION,
     
     '''
     complete = None
-    for key, value in y.items():
+    for key, value in list(y.items()):
         fs, _ = algorithms[alg](x,value,mode=mode, **kwargs)
 
         fs = fs.rename(columns={1:key})

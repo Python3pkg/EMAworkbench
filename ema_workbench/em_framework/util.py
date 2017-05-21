@@ -4,6 +4,7 @@ from __future__ import (unicode_literals, print_function, absolute_import,
 
 import copy
 from collections import OrderedDict
+import collections
 
 try:
     from UserDict import UserDict
@@ -115,7 +116,7 @@ class NamedObjectMap(object):
         del self._data[key]
          
     def __iter__(self):
-        return iter(self._data.values())
+        return iter(list(self._data.values()))
      
     def __contains__(self, item):
         return item in self._data
@@ -138,7 +139,7 @@ class NamedObjectMap(object):
         return self
      
     def keys(self):
-        return self._data.keys()
+        return list(self._data.keys())
 
 class NamedObjectMapDescriptor(object):
     def __init__(self, kind):
@@ -171,7 +172,7 @@ class NamedDict(UserDict, NamedObject):
         super(NamedDict, self).__init__(**kwargs)
         if name is None:
             raise ValueError()
-        elif callable(name):
+        elif isinstance(name, collections.Callable):
             name = name(self)
         self.name = name
            
@@ -235,7 +236,7 @@ def determine_objects(models, attribute, union=True):
         # relies on name based identity, do we want that?
         named_objects.extend(model_params)
 
-        intersection = intersection.intersection(model_params.keys())
+        intersection = intersection.intersection(list(model_params.keys()))
     
     # in case not union, remove all parameters not in intersection
     if not union:

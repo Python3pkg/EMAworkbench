@@ -6,7 +6,7 @@ Created on Nov 8, 2011
      gyucel <g.yucel (at) tudelft (dot) nl>,
      jhkwakkel <j.h.kwakkel (at) tudelft (dot) nl>
 '''
-from __future__ import division
+
 
 import random
 

@@ -189,7 +189,7 @@ def plot_index(ax, ax_plot, axis, index, plot_labels=True, plot_cats=True):
     except AttributeError:
         nr_levels = 1
         levels = [index.values.tolist()]
-        indices = zip(index.values)
+        indices = list(zip(index.values))
 
     last = indices[0]
     plot_line(ax, axis, 0, 1, 0) # first line
@@ -213,7 +213,7 @@ def plot_index(ax, ax_plot, axis, index, plot_labels=True, plot_cats=True):
 
     for i, entry in enumerate(indices[1::]):
         i +=1
-        comparison = map(lambda a, b: a==b, entry, last)
+        comparison = list(map(lambda a, b: a==b, entry, last))
 
         for j, item in enumerate(comparison):
             if not item:

@@ -70,7 +70,7 @@ class TestDefaultCallback(unittest.TestCase):
         callback(experiment, result)
          
         _, out = callback.get_results()
-        self.assertIn(outcomes[0].name, out.keys())
+        self.assertIn(outcomes[0].name, list(out.keys()))
         self.assertEqual(out[outcomes[0].name].shape, (3,))
      
         # case 2 time series shape = (1, nr_time_steps)
@@ -80,7 +80,7 @@ class TestDefaultCallback(unittest.TestCase):
         callback(experiment, result)
           
         _, out = callback.get_results()
-        self.assertIn(outcomes[0].name, out.keys())
+        self.assertIn(outcomes[0].name, list(out.keys()))
         self.assertEqual(out[outcomes[0].name].shape, (3,10))
 
         # case 3 maps etc. shape = (x,y)
@@ -90,7 +90,7 @@ class TestDefaultCallback(unittest.TestCase):
         callback(experiment,result)
           
         _, out = callback.get_results()
-        self.assertIn(outcomes[0].name, out.keys())
+        self.assertIn(outcomes[0].name, list(out.keys()))
         self.assertEqual(out[outcomes[0].name].shape, (3,2,2))
 
         # case 4 assert raises EMAError

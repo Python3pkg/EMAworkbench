@@ -17,6 +17,7 @@ from sklearn.externals.six import StringIO
 
 from . import scenario_discovery_util as sdutil
 from ..util import ema_logging
+import collections
 
 # Created on May 22, 2015
 # 
@@ -56,7 +57,7 @@ def setup_cart(results, classify, incl_unc=[], mass_min=0.05):
     if isinstance(classify, six.string_types):
         y = results[1][classify]
         mode = sdutil.REGRESSION
-    elif callable(classify):
+    elif isinstance(classify, collections.Callable):
         y = classify(results[1])
         mode = sdutil.BINARY
     else:

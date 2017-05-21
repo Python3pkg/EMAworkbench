@@ -278,9 +278,7 @@ def _in_box(x, boxlim):
     return indices
 
 
-class OutputFormatterMixin(object):
-    __metaclass__ = abc.ABCMeta
-    
+class OutputFormatterMixin(object, metaclass=abc.ABCMeta):
     @abc.abstractproperty
     def boxes(self):
         '''Property for getting a list of box limits'''
@@ -305,7 +303,7 @@ class OutputFormatterMixin(object):
         nr_boxes = len(boxes)
         dtype = float
         index = ["box {}".format(i+1) for i in range(nr_boxes)]
-        for value in box_lims[0].dtype.fields.values():
+        for value in list(box_lims[0].dtype.fields.values()):
             if value[0] == object:
                 dtype = object
                 break

@@ -117,7 +117,7 @@ class BaseExcelModel(FileModel):
             raise
         
         #set values on sheet
-        for key, value in experiment.items():
+        for key, value in list(experiment.items()):
             try:
                 sheet.Range(key).Value = value 
             except com_error:

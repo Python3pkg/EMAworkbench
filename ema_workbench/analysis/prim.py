@@ -30,6 +30,7 @@ import six
 from mpl_toolkits.axes_grid1 import host_subplot  # @UnresolvedImport
 from scipy.stats import binom
 from ema_workbench.analysis import scenario_discovery_util
+import collections
 
 try:
     import mpld3
@@ -277,7 +278,7 @@ class PrimBox(object):
         stats['restricted_dim'] = stats['res dim']
 
         qp_values = self._calculate_quasi_p(i)
-        uncs = [(key, value) for key, value in qp_values.items()]
+        uncs = [(key, value) for key, value in list(qp_values.items())]
         uncs.sort(key=itemgetter(1))
         uncs = [uncs[0] for uncs in uncs]
         
@@ -688,7 +689,7 @@ def setup_prim(results, classify, threshold, incl_unc=[], **kwargs):
         x = rf.drop_fields(results[0], drop_names, asrecarray=True)
     if isinstance(classify, six.string_types):
         y = results[1][classify]
-    elif callable(classify):
+    elif isinstance(classify, collections.Callable):
         y = classify(results[1])
     else:
         raise TypeError("unknown type for classify")
@@ -817,7 +818,7 @@ class Prim(sdutil.OutputFormatterMixin):
         
         #transform experiments to numpy array
         dtypes = self.x.dtype.fields
-        object_dtypes = [key for key, value in dtypes.items() 
+        object_dtypes = [key for key, value in list(dtypes.items()) 
                          if value[0]==np.dtype(object)]
         
         #get experiments of interest
@@ -827,13 +828,13 @@ class Prim(sdutil.OutputFormatterMixin):
         # if no subsets are provided all uncertainties with non dtype object 
         # are in the same subset, the name of this is r, for rotation
         if not subsets:
-            subsets = {"r":[key for key, value in dtypes.items() 
+            subsets = {"r":[key for key, value in list(dtypes.items()) 
                             if value[0].name!=np.dtype(object)]}
         else:
             # remove uncertainties that are in exclude and check whether 
             # uncertainties occur in more then one subset
             seen = set()
-            for key, value in subsets.items():
+            for key, value in list(subsets.items()):
                 value = set(value) - set(exclude)
     
                 subsets[key] = list(value)
@@ -844,7 +845,7 @@ class Prim(sdutil.OutputFormatterMixin):
             
         #prepare the dtypes for the new rotated experiments recarray
         new_dtypes = []
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             self._assert_dtypes(value, dtypes)
             
             # the names of the rotated columns are based on the group name 
@@ -866,14 +867,14 @@ class Prim(sdutil.OutputFormatterMixin):
         #iterate over the subsets, rotate them, and put them into the new 
         # recarray
         shape = 0
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             shape += len(value) 
         rotation_matrix = np.zeros((shape,shape))
         column_names = []
         row_names = []
         
         j = 0
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             data = self._rotate_subset(value, self.x, logical)
             subset_rotation_matrix, subset_experiments = data 
             rotation_matrix[j:j+len(value), j:j+len(value)] = subset_rotation_matrix

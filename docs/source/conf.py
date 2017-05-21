@@ -51,8 +51,8 @@ pngmath_latex_preamble = '\usepackage{cases}\n'
 master_doc = 'index'
 
 # General information about the project.
-project = u'ema_workbench'
-copyright = u'2011-2016, J.H. Kwakkel'
+project = 'ema_workbench'
+copyright = '2011-2016, J.H. Kwakkel'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -200,8 +200,8 @@ htmlhelp_basename = 'EMAworkbenchdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'EMAworkbench.tex', u'EMA workbench Documentation',
-   u'J.H. Kwakkel', 'manual'),
+  ('index', 'EMAworkbench.tex', 'EMA workbench Documentation',
+   'J.H. Kwakkel', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -233,6 +233,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'emaworkbench', u'EMA workbench Documentation',
-     [u'J.H. Kwakkel'], 1)
+    ('index', 'emaworkbench', 'EMA workbench Documentation',
+     ['J.H. Kwakkel'], 1)
 ]

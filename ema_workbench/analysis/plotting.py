@@ -347,7 +347,7 @@ def lines(results,
         experiments, outcomes = results
         experiments = experiments[experiments_to_show]
         new_outcomes = {}
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             new_outcomes[key] = value[experiments_to_show]
         results = experiments, new_outcomes
 
@@ -465,7 +465,7 @@ def plot_lines_with_envelopes(results,
     experiments, outcomes = results
     experiments = experiments[experiments_to_show]
     new_outcomes={}
-    for key, value in outcomes.items():
+    for key, value in list(outcomes.items()):
         new_outcomes[key] = value[experiments_to_show]
     results = experiments, new_outcomes
 
@@ -650,7 +650,7 @@ def kde_over_time(results,
     #determine the minima and maxima over all runs
     minima = {}
     maxima = {}
-    for key, value in results[1].items():
+    for key, value in list(results[1].items()):
         minima[key] = np.min(value)
         maxima[key] = np.max(value)
 
@@ -662,7 +662,7 @@ def kde_over_time(results,
     if group_by:
         figures = []
         axes_dicts = {}
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             fig, axes_dict = simple_kde(value, outcomes_to_show, colormap, log, 
                                         minima, maxima)
             fig.suptitle(key)
@@ -671,9 +671,9 @@ def kde_over_time(results,
 
         for outcome in outcomes_to_show:
             vmax = -1
-            for entry in axes_dicts.values():
+            for entry in list(axes_dicts.values()):
                 vmax =  max(entry[outcome].images[0].norm.vmax, vmax)
-            for entry in axes_dicts.values():
+            for entry in list(axes_dicts.values()):
                 ax = entry[outcome]
                 ax.images[0].set_clim(vmin=0, vmax=vmax)
             del vmax
@@ -760,7 +760,7 @@ def multiple_densities(results,
     
     '''
     if not outcomes_to_show:
-        outcomes_to_show =  results[1].keys()
+        outcomes_to_show =  list(results[1].keys())
         outcomes_to_show.remove(TIME)
     elif isinstance(outcomes_to_show, six.string_types):
         outcomes_to_show=[outcomes_to_show]
@@ -778,7 +778,7 @@ def multiple_densities(results,
                 experiments, outcomes = temp_results
                 experiments = experiments[experiments_to_show]
                 new_outcomes = {}
-                for key, value in outcomes.items():
+                for key, value in list(outcomes.items()):
                     new_outcomes[key] = value[experiments_to_show]
                 temp_results = experiments, new_outcomes
 

@@ -58,17 +58,17 @@ for example in all_examples:
         stale_examples.append(example)
 
 for example in stale_examples:
-    print example,
+    print(example, end=' ')
     png=example.replace('py','png')
                                  
     matplotlib.pyplot.figure(figsize=(6,6))
     stdout=sys.stdout
     sys.stdout=open('nul','w')
     try:
-        execfile(example)
+        exec(compile(open(example).read(), example, 'exec'))
         sys.stdout=stdout
-        print " OK"
-    except ImportError,strerr:
+        print(" OK")
+    except ImportError as strerr:
         sys.stdout=stdout
         sys.stdout.write(" FAIL: %s\n"%strerr)
         continue

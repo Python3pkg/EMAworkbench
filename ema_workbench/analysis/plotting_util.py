@@ -203,7 +203,7 @@ def plot_violinplot(ax, value, log, group_labels=None):
     if log:
         warning("log option ignored for violin plot")
     
-    pos = range(len(value))
+    pos = list(range(len(value)))
     dist = max(pos)-min(pos)
     _ = min(0.15*max(dist,1.0),0.5)
     for data, p in zip(value,pos):
@@ -491,7 +491,7 @@ def filter_scalar_outcomes(outcomes):
     
     '''
     outcomes_to_remove = []
-    for key, value in outcomes.items():
+    for key, value in list(outcomes.items()):
         if len(value.shape) <2:
             outcomes_to_remove.append(key)
             info("%s not shown because it is not time series data" %key)
@@ -521,7 +521,7 @@ def determine_time_dimension(outcomes):
         time = time[0, :]
         outcomes.pop('TIME')
     except KeyError:
-        values = iter(outcomes.values())
+        values = iter(list(outcomes.values()))
         for value in values:
             if len(value.shape)==2:
                 time =  np.arange(0, value.shape[1])
@@ -595,7 +595,7 @@ def group_results(experiments, outcomes, group_by, grouping_specifiers,
             logical = column_to_group_by==specifier
         
         group_outcomes = {}
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             value = value[logical]
             group_outcomes[key] = value
         groups[label] = (experiments[logical], group_outcomes)
@@ -667,7 +667,7 @@ def prepare_pairs_data(results,
 
     def filter_outcomes(outcomes, point_in_time):
         new_outcomes = {}
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             if len(value.shape)==2:
                 new_outcomes[key] = value[:, point_in_time]
             else:
@@ -680,7 +680,7 @@ def prepare_pairs_data(results,
         
         if group_by:
             new_outcomes = {}
-            for key, value in outcomes.items():
+            for key, value in list(outcomes.items()):
                 new_outcomes[key] = filter_outcomes(value, point_in_time)
             outcomes = new_outcomes
         else:
@@ -724,7 +724,7 @@ def prepare_data(results,
     if filter_scalar:
         outcomes = filter_scalar_outcomes(outcomes)
     if not outcomes_to_show:
-        outcomes_to_show = outcomes.keys()
+        outcomes_to_show = list(outcomes.keys())
         
     # group the data if desired
     if group_by:
@@ -756,7 +756,7 @@ def prepare_data(results,
                                  grouping_specifiers, grouping_labels)
         
         new_outcomes = {}
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             new_outcomes[key] = value[1]
         outcomes = new_outcomes
     else:

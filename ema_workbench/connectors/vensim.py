@@ -349,7 +349,7 @@ class BaseVensimModel(FileModel):
 #         constants = {entry.name:entry.value for entry in self.constants}
 #         experiment = combine(ex, self.policy, constants)
   
-        for key, value in experiment.items():
+        for key, value in list(experiment.items()):
             set_value(key, value)
         debug("model parameters set successfully")
         
@@ -504,7 +504,7 @@ class LookupUncertainty(Parameter):
         
         if self.lookup_type == "categories":
             msi.uncertainties.append(CategoricalParameter("c-"+self.name),
-                                                           range(len(values)))
+                                                           list(range(len(values))))
             msi._lookup_uncertainties.append(self)  
         elif self.lookup_type == "hearne1":
             msi.uncertainties.append(RealParameter("m-"+self.name,

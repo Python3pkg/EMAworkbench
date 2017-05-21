@@ -122,7 +122,7 @@ def get_engines_by_host(client):
     results = {i:client[i].apply_sync(socket.gethostname) for i in client.ids}
 
     engines_by_host = collections.defaultdict(list)
-    for engine_id, host in results.items():
+    for engine_id, host in list(results.items()):
         engines_by_host[host].append(engine_id)
     return engines_by_host
 
@@ -143,7 +143,7 @@ def update_cwd_on_all_engines(client):
     engines_by_host = get_engines_by_host(client)
     
     notebook_host = socket.gethostname()
-    for key, value in engines_by_host.items():
+    for key, value in list(engines_by_host.items()):
 
         if key == notebook_host:
             cwd = os.getcwd()

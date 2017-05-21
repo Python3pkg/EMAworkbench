@@ -19,7 +19,7 @@ results = load_results(file_name)
 fig, axes = envelopes(results, group_by='policy', density=KDE, fill=True)
 
 # we can access each of the axes and make changes
-for key, value in axes.iteritems():
+for key, value in axes.items():
     # the key is the name of the outcome for the normal plot
     # and the name plus '_density' for the endstate distribution
     if key.endswith('_density'):

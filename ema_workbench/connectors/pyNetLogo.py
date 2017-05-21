@@ -6,7 +6,7 @@ Created on 21 mrt. 2013
 To do: check Mac support and handling of custom directories
 
 '''
-from __future__ import unicode_literals, absolute_import
+
 import os
 import re
 import sys
@@ -310,8 +310,8 @@ class NetLogoLink():
             extents = self.link.report('(list min-pxcor max-pxcor min-pycor max-pycor)')
             extents = self._cast_results(extents).astype(int)
 
-            results_df = pd.DataFrame(index=range(extents[2],extents[3]+1,1),
-                                      columns=range(extents[0],extents[1]+1,1))
+            results_df = pd.DataFrame(index=list(range(extents[2],extents[3]+1,1)),
+                                      columns=list(range(extents[0],extents[1]+1,1)))
             results_df.sort_index(ascending=False, inplace=True)
             if self.NL_VERSION == '6.0':
                 resultsvec = self.link.report('map [[?1] -> [{0}] of ?1] sort patches'.format(netlogo_reporter))

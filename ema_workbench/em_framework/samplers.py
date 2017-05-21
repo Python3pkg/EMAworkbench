@@ -14,7 +14,7 @@ try:
     from future_builtins import zip
 except ImportError:
     try:
-        from itertools import izip as zip # < 2.5 or 3.x
+         # < 2.5 or 3.x
     except ImportError:
         pass
 
@@ -329,7 +329,7 @@ class FullFactorialSampler(AbstractSampler):
             the total number of experimental design
         '''
         nr_designs = 1
-        for value in sampled_parameters.values():
+        for value in list(sampled_parameters.values()):
             nr_designs *= len(value)
         return nr_designs
 

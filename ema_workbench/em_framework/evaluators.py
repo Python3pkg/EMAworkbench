@@ -129,7 +129,7 @@ class BaseEvaluator(object):
         scenarios = []
         
         for i, job in enumerate(jobs):
-            variables = dict(zip(self.parameter_names, job.solution.variables))
+            variables = dict(list(zip(self.parameter_names, job.solution.variables)))
             
                 # we can now evaluate the model
             if self.searchover=='levers':

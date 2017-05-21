@@ -15,6 +15,7 @@ import six
 import warnings
 from ema_workbench.util import ema_logging
 from ema_workbench.em_framework.parameters import CategoricalParameter
+import collections
 
 
 try:
@@ -46,7 +47,7 @@ class ModelMeta(abc.ABCMeta):
     
     def __new__(mcls, name, bases, namespace):  # @NoSelf
         
-        for key, value in namespace.items():
+        for key, value in list(namespace.items()):
             if isinstance(value, NamedObjectMapDescriptor):
                 value.name = key
                 value.internal_name = '_'+key
@@ -144,7 +145,7 @@ class AbstractModel(six.with_metaclass(ModelMeta, NamedObject)):
         self.policy = policy
 
         remove = []
-        for key, value in policy.items():
+        for key, value in list(policy.items()):
             if hasattr(self, key):
                 setattr(self, key, value)
                 remove.append(key)
@@ -330,7 +331,7 @@ class Replicator(AbstractModel):
             experiment = copy.deepcopy(partial_experiment)
             experiment = combine(experiment, rep)
             output = self.run_experiment(experiment)
-            for key, value in output.items():
+            for key, value in list(output.items()):
                 outputs[key].append(value)
             
         self.output = outputs
@@ -391,7 +392,7 @@ class BaseModel(AbstractModel):
     def __init__(self, name, function=None):
         super(BaseModel, self).__init__(name)
         
-        if not callable(function):
+        if not isinstance(function, collections.Callable):
             raise ValueError('function should be callable')
         
         self.function = function

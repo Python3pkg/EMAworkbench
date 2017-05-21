@@ -214,7 +214,7 @@ def _set_ax_pathcollection_to_bw(collection, ax, style, colormap):
     '''
     color_converter = ColorConverter()
     colors = {}
-    for key, value in color_converter.colors.items():
+    for key, value in list(color_converter.colors.items()):
         colors[value] = key    
 
     rgb_orig = collection._original_facecolor
@@ -273,7 +273,7 @@ def set_legend_to_bw(leg, style, colormap, line_style='continuous'):
                     element.update({'edgecolor':'black'})
                     element.update({'hatch':colormap[rgb_orig]['hatch']})
                 elif style==GREYSCALE:
-                    ema_logging.info(colormap.keys())
+                    ema_logging.info(list(colormap.keys()))
                     element.update({'facecolor':colormap[rgb_orig]['fill']})
                     element.update({'edgecolor':colormap[rgb_orig]['fill']})
             else:
@@ -337,11 +337,11 @@ def set_fig_to_bw(fig, style=HATCHING, line_style='continuous', all_colors=None)
         ema_logging.warning('more colors used than provided in B&W mapping, cycling over mapping')
     else:
         mapping_cycle = bw_mapping 
-    colormap = dict(zip(all_colors, mapping_cycle))
-    ema_logging.debug(colormap.keys())
+    colormap = dict(list(zip(all_colors, mapping_cycle)))
+    ema_logging.debug(list(colormap.keys()))
     
     max_shade=0.9
-    for i, color in enumerate(colormap.keys()):
+    for i, color in enumerate(list(colormap.keys())):
         relative_color=max_shade*((i+1)/len(all_colors))
         colormap[color]['fill'] = str(relative_color)
     

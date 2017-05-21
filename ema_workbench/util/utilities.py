@@ -9,7 +9,7 @@ from __future__ import (absolute_import, print_function, division,
 try:
     import configparser
 except ImportError:
-    import ConfigParser as configparser
+    import configparser as configparser
 
 # import cPickle
 from io import BytesIO, StringIO
@@ -100,7 +100,7 @@ def load_results(file_name):
         metadata = {entry[0]: entry[1:] for entry in metadata}
 
         # load outcomes
-        for outcome, shape in metadata.items():
+        for outcome, shape in list(metadata.items()):
             shape = list(shape)
             shape[0] = shape[0][1:]
             shape[-1] = shape[-1][0:-1]
@@ -112,7 +112,7 @@ def load_results(file_name):
                         temp_shape.append(int(entry))
                     except ValueError:
                         try:
-                            temp_shape.append(int(long(entry)))
+                            temp_shape.append(int(int(entry)))
                         except NameError: # we are on python3
                             temp_shape.append(int(entry[0:-1]))
             shape = tuple(temp_shape)
@@ -184,14 +184,14 @@ def save_results(results, file_name):
         add_file(z, dtype, 'experiments metadata.csv')
         
         # write outcome metadata
-        outcome_names = outcomes.keys()
+        outcome_names = list(outcomes.keys())
         outcome_meta = ["{},{}".format(outcome, outcomes[outcome].shape) 
                         for outcome in outcome_names]
         outcome_meta = "\n".join(outcome_meta)
         add_file(z, outcome_meta, "outcomes metadata.csv")
         
         # outcomes
-        for key, value in outcomes.items():
+        for key, value in list(outcomes.items()):
             fh = WriterFile()
             
             nr_dim = len(value.shape)
@@ -303,8 +303,8 @@ def merge_results(results1, results2, downsample=None):
     merged_exp[old_exp.shape[0]::] = new_exp
     
     #only merge the results that are in both
-    keys = old_res.keys()
-    [keys.append(key) for key in new_res.keys()]
+    keys = list(old_res.keys())
+    [keys.append(key) for key in list(new_res.keys())]
     keys = set(keys)
     info("intersection of keys: %s" % keys)
     

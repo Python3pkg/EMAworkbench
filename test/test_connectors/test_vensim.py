@@ -100,8 +100,8 @@ class VensimMSITest(unittest.TestCase):
         experiments, outcomes = perform_experiments(model, nr_runs)
         
         self.assertEqual(experiments.shape[0], nr_runs)
-        self.assertIn('TIME', outcomes.keys())
-        self.assertIn(model.outcomes[0].name, outcomes.keys())
+        self.assertIn('TIME', list(outcomes.keys()))
+        self.assertIn(model.outcomes[0].name, list(outcomes.keys()))
     
 
 class LookupUncertaintyTest(unittest.TestCase):

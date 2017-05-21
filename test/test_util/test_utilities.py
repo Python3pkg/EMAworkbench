@@ -36,7 +36,7 @@ class SaveResultsTestCase(unittest.TestCase):
         
         results = (experiments, {'a': outcome_a})
     
-        fn = u'../data/test.tar.gz'
+        fn = '../data/test.tar.gz'
         
         save_results(results, fn)
         os.remove(fn)
@@ -89,8 +89,8 @@ class LoadResultsTestCase(unittest.TestCase):
         
         results = (experiments, {'a': outcome_a})
         
-        save_results(results, u'../data/test.tar.gz')
-        experiments, outcomes  = load_results(u'../data/test.tar.gz')
+        save_results(results, '../data/test.tar.gz')
+        experiments, outcomes  = load_results('../data/test.tar.gz')
         
         logical = np.allclose(outcomes['a'],outcome_a)
         

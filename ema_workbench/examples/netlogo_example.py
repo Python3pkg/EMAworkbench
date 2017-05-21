@@ -3,7 +3,7 @@ Created on 20 mrt. 2013
 
 @author: localadmin
 '''
-from __future__ import unicode_literals, absolute_import
+
 
 from ema_workbench.connectors.netlogo import NetLogoModel
 

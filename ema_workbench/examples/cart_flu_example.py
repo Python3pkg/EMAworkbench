@@ -32,7 +32,7 @@ experiments, results = results
 logical = experiments['policy'] == 'no policy'
 new_experiments = experiments[ logical ]
 new_results = {}
-for key, value in results.items():
+for key, value in list(results.items()):
     new_results[key] = value[logical]
 
 results = (new_experiments, new_results)
@@ -43,8 +43,8 @@ cart_alg = cart.setup_cart(results, classify, mass_min=0.05)
 cart_alg.build_tree()
 
 #print cart to std_out
-print cart_alg.stats_to_dataframe()
-print cart_alg.boxes_to_dataframe()
+print(cart_alg.stats_to_dataframe())
+print(cart_alg.boxes_to_dataframe())
 
 #visualize
 cart_alg.display_boxes(together=True)

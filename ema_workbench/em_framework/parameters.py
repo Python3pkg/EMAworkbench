@@ -48,7 +48,7 @@ def create_category(cat):
         return Category(str(cat), cat)
     
 
-class Parameter(Variable):
+class Parameter(Variable, metaclass=abc.ABCMeta):
     ''' Base class for any model input parameter
     
     Parameters
@@ -70,8 +70,6 @@ class Parameter(Variable):
         upper_bound
     
     '''
-    
-    __metaclass__ = abc.ABCMeta
         
     INTEGER = 'integer'
     UNIFORM = 'uniform'
@@ -101,7 +99,7 @@ class Parameter(Variable):
     def __eq__ (self, other):
         comparison = [all(hasattr(self, key) == hasattr(other, key) and
                           getattr(self, key) == getattr(other, key) for key 
-                          in self.__dict__.keys())]
+                          in list(self.__dict__.keys()))]
         comparison.append(self.__class__ == other.__class__)
         return all(comparison)
 

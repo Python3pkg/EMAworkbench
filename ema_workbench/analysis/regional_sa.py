@@ -72,8 +72,8 @@ def plot_discrete_cdf(ax, unc, x, y, xticklabels_on,
             freqs.append((cat, freq))
             
         freqs.sort(key=operator.itemgetter(1))
-        cats = map(operator.itemgetter(0), freqs)
-        freqs = map(operator.itemgetter(1), freqs)
+        cats = list(map(operator.itemgetter(0), freqs))
+        freqs = list(map(operator.itemgetter(1), freqs))
         
         cum_freq = 0
         for j, freq in enumerate(freqs):
